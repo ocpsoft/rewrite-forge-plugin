@@ -28,6 +28,7 @@ import org.jboss.forge.shell.plugins.SetupCommand;
 import org.jboss.forge.shell.util.Streams;
 
 import com.ocpsoft.rewrite.config.Configuration;
+import com.ocpsoft.rewrite.config.ConfigurationBuilder;
 import com.ocpsoft.rewrite.servlet.config.HttpConfigurationProvider;
 
 @Alias("rewrite")
@@ -74,14 +75,15 @@ public class RewritePlugin implements Plugin
          providerClass.setPackage(java.calculatePackage(provider));
 
          providerClass.addImport(Configuration.class);
+         providerClass.addImport(ConfigurationBuilder.class);
          providerClass.addImport(HttpConfigurationProvider.class);
          providerClass.addImport(ServletContext.class);
 
          providerClass.setSuperType(HttpConfigurationProvider.class);
 
-         Method<JavaClass> getConfiguration = providerClass
-                  .addMethod("public Configuration getConfiguration(ServletContext context) { return null; }");
-         getConfiguration.addAnnotation(Override.class);
+         Method<JavaClass> method = providerClass
+                  .addMethod("public Configuration getConfiguration(ServletContext context) { return ConfigurationBuilder.begin(); }");
+         method.addAnnotation(Override.class);
 
          Method<JavaClass> priority = providerClass.addMethod("public int priority() { return 0; }");
          priority.addAnnotation(Override.class);
