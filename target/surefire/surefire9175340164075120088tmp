@@ -1,0 +1,5 @@
+#surefire
+#Sat Oct 01 10:40:40 EDT 2011
+user.dir=/Users/lbaxter/Projects/forge/plugin-rewrite
+localRepository=/Users/lbaxter/.m2/repository
+basedir=/Users/lbaxter/Projects/forge/plugin-rewrite
