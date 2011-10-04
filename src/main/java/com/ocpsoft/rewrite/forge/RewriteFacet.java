@@ -72,7 +72,8 @@ public class RewriteFacet extends BaseFacet
    public boolean isInstalled()
    {
       DependencyFacet deps = project.getFacet(DependencyFacet.class);
-      return deps.hasDependency(dep);
+      return deps.hasDependency(dep)
+               || deps.hasDependency(DependencyBuilder.create("com.ocpsoft:prettyfaces-jsf2:[4.0.0,]"));
    }
 
 }
