@@ -52,15 +52,17 @@ public class RewriteFacet extends BaseFacet
 
       List<Dependency> available = deps.resolveAvailableVersions(dep);
 
-      if (!available.isEmpty())
-         prompt.promptChoiceTyped("Install which version of Rewrite?", available, available.get(0));
+      Dependency dependency = dep;
+      if (!available.isEmpty()) {
+         dependency = prompt.promptChoiceTyped("Install which version of Rewrite?", available, available.get(0));
+      }
       else
          throw new RuntimeException(
                   "No versions were resolved. Please make sure you have an active internet connection.");
 
       if (!isInstalled())
       {
-         deps.addDependency(dep);
+         deps.addDependency(dependency);
       }
 
       return true;
