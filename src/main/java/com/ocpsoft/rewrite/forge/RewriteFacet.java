@@ -35,12 +35,12 @@ import org.jboss.forge.shell.plugins.RequiresFacet;
 
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>
- * 
+ *
  */
 @RequiresFacet({ DependencyFacet.class, JavaSourceFacet.class })
 public class RewriteFacet extends BaseFacet
 {
-   private static final Dependency dep = DependencyBuilder.create("com.ocpsoft.rewrite:rewrite-impl-servlet");
+   private static final Dependency dep = DependencyBuilder.create("org.ocpsoft.rewrite:rewrite-impl-servlet");
 
    @Inject
    private ShellPrompt prompt;
@@ -62,7 +62,7 @@ public class RewriteFacet extends BaseFacet
 
       if (!isInstalled())
       {
-         deps.addDependency(dependency);
+         deps.addDirectDependency(dependency);
       }
 
       return true;
@@ -72,8 +72,8 @@ public class RewriteFacet extends BaseFacet
    public boolean isInstalled()
    {
       DependencyFacet deps = project.getFacet(DependencyFacet.class);
-      return deps.hasDependency(dep)
-               || deps.hasDependency(DependencyBuilder.create("com.ocpsoft:prettyfaces-jsf2:[4.0.0,]"));
+      return deps.hasEffectiveDependency(dep)
+               || deps.hasEffectiveDependency(DependencyBuilder.create("org.ocpsoft:prettyfaces:[4.0.0,]"));
    }
 
 }

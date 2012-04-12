@@ -26,10 +26,9 @@ import org.jboss.forge.shell.plugins.Plugin;
 import org.jboss.forge.shell.plugins.RequiresFacet;
 import org.jboss.forge.shell.plugins.SetupCommand;
 import org.jboss.forge.shell.util.Streams;
-
-import com.ocpsoft.rewrite.config.Configuration;
-import com.ocpsoft.rewrite.config.ConfigurationBuilder;
-import com.ocpsoft.rewrite.servlet.config.HttpConfigurationProvider;
+import org.ocpsoft.rewrite.config.Configuration;
+import org.ocpsoft.rewrite.config.ConfigurationBuilder;
+import org.ocpsoft.rewrite.servlet.config.HttpConfigurationProvider;
 
 @Alias("rewrite")
 @RequiresFacet(RewriteFacet.class)
@@ -106,7 +105,7 @@ public class RewritePlugin implements Plugin
          service.setContents(contents);
       }
 
-      ShellMessages.success(out, "Services exists and is registered.");
+      ShellMessages.success(out, "Service exists and is registered.");
 
       pickup.fire(new PickupResource(provider));
    }
