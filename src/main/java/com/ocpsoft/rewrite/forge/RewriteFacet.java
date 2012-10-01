@@ -21,12 +21,11 @@
  */
 package com.ocpsoft.rewrite.forge;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.jboss.forge.project.dependencies.Dependency;
 import org.jboss.forge.project.dependencies.DependencyBuilder;
+import org.jboss.forge.project.dependencies.DependencyInstaller;
 import org.jboss.forge.project.facets.BaseFacet;
 import org.jboss.forge.project.facets.DependencyFacet;
 import org.jboss.forge.project.facets.JavaSourceFacet;
@@ -35,45 +34,33 @@ import org.jboss.forge.shell.plugins.RequiresFacet;
 
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>
- *
+ * 
  */
 @RequiresFacet({ DependencyFacet.class, JavaSourceFacet.class })
-public class RewriteFacet extends BaseFacet
-{
-   private static final Dependency dep = DependencyBuilder.create("org.ocpsoft.rewrite:rewrite-impl-servlet");
+public class RewriteFacet extends BaseFacet {
+  private static final Dependency dep = DependencyBuilder
+          .create("org.ocpsoft.rewrite:rewrite-impl-servlet");
 
-   @Inject
-   private ShellPrompt prompt;
+  @Inject
+  private DependencyInstaller installer;
 
-   @Override
-   public boolean install()
-   {
-      DependencyFacet deps = project.getFacet(DependencyFacet.class);
+  @Inject
+  private ShellPrompt prompt;
 
-      List<Dependency> available = deps.resolveAvailableVersions(dep);
+  @Override
+  public boolean install() {
+    if (!isInstalled()) {
+      installer.install(project, dep);
+    }
+    return true;
+  }
 
-      Dependency dependency = dep;
-      if (!available.isEmpty()) {
-         dependency = prompt.promptChoiceTyped("Install which version of Rewrite?", available, available.get(0));
-      }
-      else
-         throw new RuntimeException(
-                  "No versions were resolved. Please make sure you have an active internet connection.");
-
-      if (!isInstalled())
-      {
-         deps.addDirectDependency(dependency);
-      }
-
-      return true;
-   }
-
-   @Override
-   public boolean isInstalled()
-   {
-      DependencyFacet deps = project.getFacet(DependencyFacet.class);
-      return deps.hasEffectiveDependency(dep)
-               || deps.hasEffectiveDependency(DependencyBuilder.create("org.ocpsoft:prettyfaces:[4.0.0,]"));
-   }
+  @Override
+  public boolean isInstalled() {
+    DependencyFacet deps = project.getFacet(DependencyFacet.class);
+    return deps.hasEffectiveDependency(dep)
+            || deps.hasEffectiveDependency(DependencyBuilder
+                    .create("org.ocpsoft:prettyfaces:[4.0.0,]"));
+  }
 
 }
