@@ -21,12 +21,7 @@
  */
 package com.ocpsoft.rewrite.forge;
 
-import javax.servlet.ServletContext;
-
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.forge.parser.java.JavaClass;
-import org.jboss.forge.parser.java.Method;
-import org.jboss.forge.resources.java.JavaResource;
 import org.jboss.forge.test.AbstractShellTest;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
